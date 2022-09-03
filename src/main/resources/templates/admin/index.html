@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<h2>Users: (count =  <th:block th:text="${users.size()}"/>)</h2>
+
+<div th:each="user : ${users}">
+    <a th:href="@{/admin/{id}(id=${user.id})}" th:text="${user.login}"/>
+</div>
+
+<hr/>
+
+<form th:action="@{/admin/new}">
+    <button>Add new user</button>
+</form>
+
+<form th:method="POST" th:action="@{/admin/generate}">
+    <button>Add 10 random users</button>
+</form>
+
+</body>
+</html>
