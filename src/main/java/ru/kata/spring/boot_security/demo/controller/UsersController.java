@@ -45,9 +45,9 @@ public class UsersController {
         return "/admin/edit";
     }
 
-    @RequestMapping(value = "/admin/{id}", method = RequestMethod.POST)
+    @PostMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 
