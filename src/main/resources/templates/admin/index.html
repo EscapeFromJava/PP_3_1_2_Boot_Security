@@ -3,14 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
+    <style type="text/css">
+        TABLE {
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        TD, TH {
+            padding: 3px;
+            border: 1px solid black;
+        }
+
+        TH {
+            background: #b0e0e6;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Users: (count =  <th:block th:text="${users.size()}"/>)</h2>
+<h2>Users: (count =
+    <th:block th:text="${users.size()}"/>
+    )
+</h2>
 
-<div th:each="user : ${users}">
-    <a th:href="@{/admin/{id}(id=${user.id})}" th:text="${user.login}"/>
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Second Name</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <th>
+                <a th:href="@{/admin/{id}(id=${user.id})}" th:text="${user.id}"/>
+            </th>
+            <th>
+                <th:block th:text="${user.login}"/>
+            </th>
+            <th>
+                <th:block th:text="${user.password}"/>
+            </th>
+            <th>
+                <th:block th:text="${user.firstName}"/>
+            </th>
+            <th>
+                <th:block th:text="${user.secondName}"/>
+            </th>
+            <th>
+                <th:block th:text="${user.email}"/>
+            </th>
+            <th>
+                <form th:action="@{/admin/{id}/edit(id=${user.id})}">
+                    <button>Edit</button>
+                </form>
+            </th>
+            <th>
+                <form th:action="@{/admin/delete/{id}(id=${user.id})}">
+                    <button>Delete</button>
+                </form>
+            </th>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<br/>
 
 <hr/>
 

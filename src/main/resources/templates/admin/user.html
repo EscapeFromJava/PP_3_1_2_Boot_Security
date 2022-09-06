@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>User</title>
+  <meta charset="UTF-8">
+  <title>User</title>
 </head>
 <body>
 
+<h2>ID:</h2>
+<p th:text="${user.getId()}"/>
 <h2>Login:</h2>
 <p th:text="${user.getLogin()}"/>
+<h2>Password:</h2>
+<p th:text="${user.getPassword()}"/>
 <h2>First name:</h2>
 <p th:text="${user.getFirstName()}"/>
 <h2>Second name:</h2>
@@ -15,18 +19,10 @@
 <h2>Email:</h2>
 <p th:text="${user.getEmail()}"/>
 
-<form th:action="@{/admin/{id}/edit(id=${user.id})}">
-    <button>Edit</button>
-</form>
-<br/>
-<form th:action="@{/admin/delete/{id}(id=${user.id})}">
-    <input type="submit" value="Delete">
-</form>
-
 <hr/>
 
 <form th:action="@{/admin}">
-    <button>Back</button>
+  <button>Back</button>
 </form>
 
 </body>

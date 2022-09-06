@@ -8,56 +8,56 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
-public class UsersController {
+@RequestMapping("/admin")
+public class AdminController {
     private final UserService userService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping()
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "/admin/index";
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/{id}")
     public String getUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        return "/admin/show";
+        return "/admin/user";
     }
-
-    @GetMapping("/admin/new")
+    @GetMapping("/new")
     public String newUser(@ModelAttribute("newUser") User user) {
         return "/admin/new";
     }
 
-    @PostMapping("/admin")
+    @PostMapping()
     public String addUser(@ModelAttribute("newUser") User newUser) {
         userService.saveUser(newUser);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         return "/admin/edit";
     }
 
-    @PostMapping("/admin/{id}")
+    @PostMapping("/{id}")
     public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin/delete/{id}")
+    @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/generate")
+    @PostMapping("/generate")
     public String add10RandomUsers() {
         userService.addRandomUsers();
         return "redirect:/admin";
