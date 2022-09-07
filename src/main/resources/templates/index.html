@@ -43,7 +43,7 @@
     <th:block th:each="user : ${users}">
         <tr>
             <th>
-                <a th:href="@{/admin/{id}(id=${user.id})}" th:text="${user.id}"/>
+                <a th:href="@{/user/{id}(id=${user.id})}" th:text="${user.id}"/>
             </th>
             <th>
                 <th:block th:text="${user.login}"/>
@@ -85,6 +85,10 @@
 
 <form th:method="POST" th:action="@{/admin/generate}">
     <button>Add 10 random users</button>
+</form>
+
+<form th:action="@{/logout}">
+    <button th:style="'color: red'">Logout</button>
 </form>
 
 </body>

@@ -9,7 +9,7 @@ import java.util.Random;
 public class UserGenerator {
     public static List<User> generateUsers() {
         List<User> users = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             String login = (Login.values()[new Random().nextInt(Login.values().length)].name()).concat(String.valueOf(new Random().nextInt(100,999)));
             String password = String.valueOf(new Random().nextInt(1000, 9999));
             String firstName = FirstName.values()[new Random().nextInt(FirstName.values().length)].name();

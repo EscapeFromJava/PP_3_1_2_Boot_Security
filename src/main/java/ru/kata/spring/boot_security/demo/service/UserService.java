@@ -1,11 +1,14 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     User getUser(Long id);
+
+    User findUserByLogin(String login);
 
     List<User> getAllUsers();
 
@@ -15,5 +18,4 @@ public interface UserService {
     void updateUser(User user);
 
     void addRandomUsers();
-
 }

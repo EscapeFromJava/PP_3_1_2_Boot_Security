@@ -40,4 +40,11 @@ public class UserDaoImpl implements UserDao {
     public void updateUser(User user) {
         entityManager.merge(user);
     }
+
+    @Override
+    public User findUserByLogin(String login) {
+        return entityManager.createQuery("FROM User u WHERE u.login = :login", User.class)
+                .setParameter("login", login)
+                .getSingleResult();
+    }
 }
