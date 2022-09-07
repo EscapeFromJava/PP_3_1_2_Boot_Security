@@ -23,11 +23,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()//запрашивается авторизация для url
-                .antMatchers("/admin/**", "/user*").hasRole("ADMIN")//разрешение для конкретного url - конкретным ролям
-                .antMatchers("/user*").hasRole("USER")
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**", "/user").hasRole("ADMIN")//разрешение для конкретного url - конкретным ролям
+                .antMatchers("/user").hasRole("USER")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .successHandler(successUserHandler)
+                .formLogin().successHandler(successUserHandler)
                 .and()
                 .logout().logoutSuccessUrl("/login")
         ;
