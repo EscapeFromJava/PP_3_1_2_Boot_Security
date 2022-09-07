@@ -33,6 +33,8 @@ public class User implements UserDetails {
     @Column(name = "second_name")
     private String secondName;
     private String email;
+
+    private boolean enabled;
     @ManyToMany
     @JoinTable(
             name = "user_role"
@@ -40,6 +42,12 @@ public class User implements UserDetails {
             , inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    public User(String login, String password, List<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public User(String login, String password, String firstName, String secondName, String email) {
         this.login = login;
@@ -58,6 +66,7 @@ public class User implements UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 
