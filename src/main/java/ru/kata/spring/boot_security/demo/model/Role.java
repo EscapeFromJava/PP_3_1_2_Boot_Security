@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +26,14 @@ public class Role implements GrantedAuthority {
     private String role;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private Set<User> users;
+
+    public void addUserToRole(User user) {
+        if (users == null) {
+            users = new HashSet<>();
+        }
+        users.add(user);
+    }
 
     public Role(String role) {
         this.role = role;

@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.util.UserGenerator;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
@@ -67,9 +69,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userByLogin = userDao.findUserByLogin(username);
-        return new org.springframework.security.core.userdetails.User(userByLogin.getUsername(), userByLogin.getPassword(), userByLogin.getAuthorities());
+    public UserDetails loadUserByUsername(String username) {
+        User userDetails = userDao.findUserByLogin(username);
+        if (userDetails == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new org.springframework.security.core.userdetails.User(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
     }
-
 }

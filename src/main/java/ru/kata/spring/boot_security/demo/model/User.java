@@ -5,13 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,16 +33,27 @@ public class User implements UserDetails {
     private String secondName;
     private String email;
 
-    private boolean enabled;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
-    public User(String login, String password, List<Role> roles) {
+    public void addRoleToUser(Role role){
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(String login, String password, Set<Role> roles) {
         this.login = login;
         this.password = password;
         this.roles = roles;
@@ -66,13 +76,12 @@ public class User implements UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
-                ", enabled=" + enabled +
                 '}';
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+        return getRoles();
     }
 
     @Override
