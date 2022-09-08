@@ -1,18 +1,14 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -24,19 +20,16 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     private Long id;
     private String role;
-
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    public void addUserToRole(User user) {
-        if (users == null) {
-            users = new HashSet<>();
-        }
-        users.add(user);
-    }
-
     public Role(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String getAuthority() {
+        return role;
     }
 
     @Override
@@ -47,8 +40,6 @@ public class Role implements GrantedAuthority {
                 '}';
     }
 
-    @Override
-    public String getAuthority() {
-        return role;
-    }
+
+
 }

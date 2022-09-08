@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,11 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -41,18 +38,6 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
-    public void addRoleToUser(Role role){
-        if (roles == null) {
-            roles = new HashSet<>();
-        }
-        roles.add(role);
-    }
-
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
-
     public User(String login, String password, Set<Role> roles) {
         this.login = login;
         this.password = password;
@@ -65,6 +50,15 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
+    }
+
+    public User(String login, String password, String firstName, String secondName, String email, Set<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.email = email;
+        this.roles = roles;
     }
 
     @Override

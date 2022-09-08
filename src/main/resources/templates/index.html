@@ -61,7 +61,7 @@
                 <th:block th:text="${user.email}"/>
             </th>
             <th>
-                <form th:action="@{/admin/{id}/edit(id=${user.id})}">
+                <form th:action="@{/admin/edit/{id}(id=${user.id})}">
                     <button>Edit</button>
                 </form>
             </th>
@@ -81,10 +81,6 @@
 
 <form th:action="@{/admin/new}">
     <button>Add new user</button>
-</form>
-
-<form th:method="POST" th:action="@{/admin/generate}">
-    <button>Add 10 random users</button>
 </form>
 
 <form th:action="@{/logout}">

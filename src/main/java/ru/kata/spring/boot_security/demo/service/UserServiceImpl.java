@@ -8,9 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.util.UserGenerator;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -63,17 +61,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addRandomUsers() {
-        UserGenerator.generateUsers().forEach(userDao::saveUser);
-    }
-
-    @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) {
-        User userDetails = userDao.findUserByLogin(username);
-        if (userDetails == null) {
+        User userByLogin = userDao.findUserByLogin(username);
+        if (userByLogin == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+        return new org.springframework.security.core.userdetails.User(userByLogin.getUsername(), userByLogin.getPassword(), userByLogin.getAuthorities());
     }
 }

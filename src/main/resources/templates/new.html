@@ -7,7 +7,7 @@
 <body>
 
 <h2>Add user</h2>
-<form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+<form th:method="POST" th:action="@{/admin/new}" th:object="${newUser}">
     <label for="login">Login</label>
     <input type="text" th:field="*{login}" id="login"/>
     <br/>
@@ -29,7 +29,7 @@
 
 <hr/>
 
-<form th:action="@{/admin}">
+<form th:action="@{/admin/users}">
     <button>Back</button>
 </form>
 
