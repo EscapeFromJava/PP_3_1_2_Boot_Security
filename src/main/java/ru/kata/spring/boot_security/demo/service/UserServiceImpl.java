@@ -63,9 +63,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDetails loadUserByUsername(String username) {
         User userByLogin = userDao.findUserByLogin(username);
-        if (userByLogin == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
         return new org.springframework.security.core.userdetails.User(userByLogin.getUsername(), userByLogin.getPassword(), userByLogin.getAuthorities());
     }
 }

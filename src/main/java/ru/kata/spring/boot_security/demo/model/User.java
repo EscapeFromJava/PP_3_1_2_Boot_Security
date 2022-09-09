@@ -29,7 +29,6 @@ public class User implements UserDetails {
     @Column(name = "second_name")
     private String secondName;
     private String email;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role"
@@ -37,21 +36,6 @@ public class User implements UserDetails {
             , inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
-
-    public User(String login, String password, Set<Role> roles) {
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public User(String login, String password, String firstName, String secondName, String email) {
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.email = email;
-    }
-
     public User(String login, String password, String firstName, String secondName, String email, Set<Role> roles) {
         this.login = login;
         this.password = password;
